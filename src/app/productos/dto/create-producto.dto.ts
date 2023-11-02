@@ -1,14 +1,14 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateProductoDto {
-  @ApiProperty()
+  @ApiProperty({example:'Producto 1'})
   nombreProducto: string;
-  @ApiProperty()
+  @ApiProperty({description:'Id de la categoria',example:'1'})
   idCategoriaProducto: number;
-  @ApiProperty()
-  idPesoCantidadProducto: number;
-  @ApiProperty()
+  @ApiProperty({description:'peso/cantidad',example:'5'})
+  pesoCantidadProducto: number;
+  @ApiProperty({description:'Id de la unidad de medida',example:'1'})
   idUnidadMedidaProducto: number;
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({example:'100'})
   stockProducto: number;
 }

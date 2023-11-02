@@ -1,21 +1,19 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { CategoriaProducto } from '../entities/categoria-producto.entity'; 
-import { UnidadMedidaProducto } from '../entities/unidad-medida-producto.entity'; 
 
 export class UpdateProductoDto {
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({example:'Producto 1'})
   nombreProducto?: string;
 
-  @ApiPropertyOptional()
-  idCategoriaProducto?: Partial<CategoriaProducto>;
+  @ApiPropertyOptional({description:'Id de la categoria',example:'1'})
+  idCategoriaProducto?: number;
 
-  @ApiPropertyOptional()
-  idPesoCantidadProducto?: number;
+  @ApiPropertyOptional({description:'peso/cantidad',example:'5'})
+  pesoCantidadProducto?: number;
 
-  @ApiPropertyOptional()
-  idUnidadMedidaProducto?: Partial<UnidadMedidaProducto>;
+  @ApiPropertyOptional({description:'Id de la unidad de medida',example:'1'})
+  idUnidadMedidaProducto?: number;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({example:'100'})
   stockProducto?: number;
 }
 

@@ -13,14 +13,14 @@ export class Producto {
 
     @ManyToOne(() => CategoriaProducto, { eager: true }) // Relación Many-to-One con la entidad CategoriaProducto
     @JoinColumn({ name: 'idCategoriaProducto' }) // Nombre de la columna de clave foránea
-    idCategoriaProducto: CategoriaProducto;
+    idCategoriaProducto: number;
 
     @Column()
-    idPesoCantidadProducto: number
+    pesoCantidadProducto: number // cuanto pesa o cuanta cantidad tiene en numero
 
     @ManyToOne(() => UnidadMedidaProducto, { eager: true }) // Relación Many-to-One con la entidad UnidadMedidaProducto
     @JoinColumn({ name: 'idUnidadMedidaProducto' }) // Nombre de la columna de clave foránea
-    idUnidadMedidaProducto: UnidadMedidaProducto;
+    idUnidadMedidaProducto: number;
 
     @Column({ nullable: true })
     stockProducto: number;

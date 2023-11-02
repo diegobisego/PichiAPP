@@ -2,7 +2,7 @@ import { SharedModule } from './shared/shared.module';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { productosModule } from './productos/producto.module';
+import { ProductosModule } from './productos/producto.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getDatabaseConfig } from '../config/dbConfig';
 import { ClientesModule } from './clientes/clientes.module';
@@ -22,7 +22,7 @@ import appConfig from 'src/config/app.config';
       load: [appConfig],
     }),
     SharedModule,
-    productosModule,
+    ProductosModule,
     ClientesModule,
     VentasModule,
   ],
