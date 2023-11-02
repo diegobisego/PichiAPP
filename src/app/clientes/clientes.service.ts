@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateClienteDto } from './dto/create-cliente.dto';
-import { UpdateClienteDto } from './dto/update-cliente.dto';
-import { Repository } from 'typeorm';
 import { Cliente } from './entities/cliente.entity';
+import { Repository } from 'typeorm';
+import { UpdateClienteDto } from './dto/update-cliente.dto';
 
 @Injectable()
 export class ClientesService {
@@ -13,29 +13,47 @@ export class ClientesService {
   ) {}
 
   async create(createClienteDto: CreateClienteDto) {
-    try {
-      const nuevoCliente = this.clienteRepository.create(createClienteDto);
-      const clienteGuardado = await this.clienteRepository.save(nuevoCliente);
+    const nuevoCliente = this.clienteRepository.create(createClienteDto);
+    const clienteGuardado = await this.clienteRepository.save(nuevoCliente);
+    if (clienteGuardado) {
       return clienteGuardado;
-    } catch (error) {
-      console.error(`Se produjo un error al intentar crear un cliente: ${error}`);
-      throw new Error('Error al crear el cliente');
+    } else {
+      throw new BadRequestException('Error al intentar crear el cliente');
     }
   }
 
-  findAll() {
-    return `This action returns all clientes`;
+  async findAll() {
+    return await this.clienteRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} cliente`;
+  async findOne(idCliente: number) {
+    const cliente = await this.clienteRepository.findOne({
+      where: { idCliente },
+    });
+    if (!cliente) {
+      throw new NotFoundException(`Cliente con ID ${idCliente} no encontrado.`);
+    }
+    return cliente;
   }
 
-  update(id: number, updateClienteDto: UpdateClienteDto) {
-    return `This action updates a #${id} cliente`;
+  async update(idCliente: number, updateClienteDto: UpdateClienteDto): Promise<Cliente> {
+    const cliente = await this.findOne(idCliente);
+    if (!cliente) {
+      throw new NotFoundException(`Cliente con ID ${idCliente} no encontrado.`);
+    }
+    Object.keys(updateClienteDto).forEach((key) => {
+      if (updateClienteDto[key] !== undefined) {
+        cliente[key] = updateClienteDto[key];
+      }
+    });
+    const updatedCliente = await this.clienteRepository.save(cliente);
+    return updatedCliente;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} cliente`;
+  async remove(idCliente: number) {
+    const deleteResult = await this.clienteRepository.delete(idCliente);
+    if (deleteResult.affected === 0) {
+      throw new NotFoundException(`Cliente con ID ${idCliente} no encontrado.`);
+    }
   }
 }

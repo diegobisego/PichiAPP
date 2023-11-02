@@ -1,31 +1,31 @@
-import { PartialType, ApiProperty } from '@nestjs/swagger';
+import { PartialType, ApiPropertyOptional } from '@nestjs/swagger';
 import { CreateClienteDto } from './create-cliente.dto';
 
 export class UpdateClienteDto extends PartialType(CreateClienteDto) {
-  @ApiProperty({ required: false })
+  @ApiPropertyOptional({example:'Nuevo Nombre'})
   nombreCliente?: string;
 
-  @ApiProperty({ required: false })
-  direccion: string;
+  @ApiPropertyOptional({example:'Nueva Direccion'})
+  direccion?: string;
 
-  @ApiProperty({ required: false })
-  ciudad: number;
+  @ApiPropertyOptional({description:'Id de ciudad',example:2})
+  ciudad?: number;
 
-  @ApiProperty({ required: false })
-  pais: number;
+  @ApiPropertyOptional({description:'Id de Pais',example:2})
+  pais?: number;
 
-  @ApiProperty({ required: false })
-  telefono: string;
+  @ApiPropertyOptional({example:'123456987'})
+  telefono?: string;
 
-  @ApiProperty({ required: false })
-  dniCuit: string;
+  @ApiPropertyOptional({example:20123456879})
+  dniCuit?: string;
   
-  @ApiProperty({ required: false })
-  email: string;
+  @ApiPropertyOptional({example:'email@email.com'})
+  email?: string;
 
-  @ApiProperty({ required: false })
-  empresa: string;
+  @ApiPropertyOptional({example:'Empresa SRL'})
+  empresa?: string;
   
-  @ApiProperty({ required: false })
-  infoAdicional: string;
+  @ApiPropertyOptional({example:'Info adicional'})
+  infoAdicional?: string;
 }

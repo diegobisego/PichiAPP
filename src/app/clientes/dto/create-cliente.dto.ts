@@ -8,10 +8,10 @@ export class CreateClienteDto {
   direccion: string
 
   @ApiProperty({description: 'Id ciudad del cliente / Empresa', example:'1'})
-  ciudad: number;
+  idCsiudad: number;
 
   @ApiProperty({description: 'Id pais del cliente / Empresa', example:'1'})
-  pais: number;
+  idPais: number;
 
   @ApiPropertyOptional({example:'0123-456789'})
   telefono: string;

@@ -1,4 +1,7 @@
-import { Entity, Column , PrimaryGeneratedColumn} from "typeorm";
+import { Entity, Column , ManyToOne,JoinColumn,PrimaryGeneratedColumn} from "typeorm";
+import { Pais } from "src/app/shared/entities/pais.entity";
+import { Ciudad } from "src/app/shared/entities/ciudad.entity";
+
 
 @Entity()
 export class Cliente {
@@ -8,10 +11,16 @@ export class Cliente {
     nombreCliente: string
     @Column()
     direccion: string;
-    @Column()
-    ciudad: number;
-    @Column()
-    pais: number;
+    
+    @ManyToOne(() => Ciudad, { eager: true }) 
+    @JoinColumn({ name: 'idCiudad' }) 
+    idCiudad: number;
+    
+    @ManyToOne(() => Pais, { eager: true }) 
+    @JoinColumn({ name: 'idPais' }) 
+    idPais: number;
+
+
     @Column()
     telefono: string;
     @Column()
