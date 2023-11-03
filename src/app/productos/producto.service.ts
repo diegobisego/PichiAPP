@@ -43,24 +43,24 @@ export class ProductosService {
     return product;
   }
 
-  async update(id: number, updateProductoDto: UpdateProductoDto): Promise<Producto> {
-    const producto = await this.findOne(id);
-  
-    if (!producto) {
-      throw new NotFoundException(`Producto con ID ${id} no encontrado.`);
-    }
-  
-    Object.keys(updateProductoDto).forEach((key) => {
-      if (updateProductoDto[key] !== undefined) {
-        producto[key] = updateProductoDto[key];
-      }
-    });
-  
-    const updatedProducto = await this.productoRepository.save(producto);
-  
-    return updatedProducto;
+async update(id: number, updateProductoDto: UpdateProductoDto): Promise<Producto> {
+  const producto = await this.findOne(id);
+
+  if (!producto) {
+    throw new NotFoundException(`Producto con ID ${id} no encontrado.`);
   }
-  
+
+  Object.keys(updateProductoDto).forEach((key) => {
+    if (updateProductoDto[key] !== undefined) {
+      producto[key] = updateProductoDto[key];
+    }
+  });
+
+  const updatedProducto = await this.productoRepository.save(producto);
+
+  return updatedProducto;
+}
+
 
 
   async remove(id: number) {

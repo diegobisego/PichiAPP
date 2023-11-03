@@ -1,45 +1,44 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from "typeorm";
-import { TipoComprobante } from "../entities/tipoComprobante.entity"; 
-import { Cliente } from "src/app/clientes/entities/cliente.entity"; 
-import { Vendedor } from "../entities/vendedor.entity"; 
-import { MetodoPago } from "../entities/metodoPago.entity"; 
 
-@Entity()
+import { ApiProperty } from '@nestjs/swagger';
+
 export class CreateVentaDto {
-    @PrimaryGeneratedColumn()
-    idVenta: number;
+  
+  @ApiProperty({ description: 'ID del Tipo de Comprobante', example: 1 })
+  idTipoComprobante: number;
 
-    @ManyToOne(() => TipoComprobante)
-    @JoinColumn({ name: 'idTipoComprobante' }) // Nombre de la columna de la clave foránea
-    idTipoComprobante: TipoComprobante;
+  
+  @ApiProperty({ description: 'Número de Documento', example: 'INV-123' })
+  nroDocumento: string;
 
-    @Column()
-    noDocumento: string;
+  
+  @ApiProperty({ description: 'Fecha de la Venta', example: '2023-11-02' })
+  fecha: Date;
 
-    @Column({ type: "date" })
-    fecha: Date;
+  
+  @ApiProperty({ description: 'ID del Cliente', example: 2 })
+  idCliente: number;
 
-    @ManyToOne(() => Cliente)
-    @JoinColumn({ name: 'idCliente' }) // Nombre de la columna de la clave foránea
-    idCliente: Cliente;
+  
+  @ApiProperty({ description: 'ID del Vendedor', example: 3 })
+  idVendedor: number;
 
-    @ManyToOne(() => Vendedor)
-    @JoinColumn({ name: 'idVendedor' }) // Nombre de la columna de la clave foránea
-    idVendedor: Vendedor;
+  
+  @ApiProperty({ description: 'ID del Método de Pago', example: 4 })
+  idMetodoPago: number;
 
-    @ManyToOne(() => MetodoPago)
-    @JoinColumn({ name: 'idMetodoPago' }) // Nombre de la columna de la clave foránea
-    idMetodoPago: MetodoPago;
+  
+  @ApiProperty({ description: 'Subtotal de la Venta', example: 100.0 })
+  subTotal: number;
 
-    @Column({ type: "decimal", precision: 10, scale: 2 })
-    subTotal: number;
+  
+  @ApiProperty({ description: 'Impuestos de la Venta', example: 18.5 })
+  impuestos: number;
 
-    @Column({ type: "decimal", precision: 10, scale: 2 })
-    impuestos: number;
+  
+  @ApiProperty({ description: 'Descuentos de la Venta', example: 5.0 })
+  descuentos: number;
 
-    @Column({ type: "decimal", precision: 10, scale: 2 })
-    descuentos: number;
-
-    @Column({ type: "decimal", precision: 10, scale: 2 })
-    total: number;
+  
+  @ApiProperty({ description: 'Total de la Venta', example: 113.5 })
+  total: number;
 }

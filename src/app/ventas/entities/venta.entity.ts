@@ -1,27 +1,45 @@
-import { Entity, Column , PrimaryGeneratedColumn} from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from "typeorm";
+import { TipoComprobante } from "../entities/tipoComprobante.entity"; 
+import { Cliente } from "src/app/clientes/entities/cliente.entity"; 
+import { Vendedor } from "../entities/vendedor.entity"; 
+import { MetodoPago } from "../entities/metodoPago.entity"; 
 
 @Entity()
 export class Venta {
     @PrimaryGeneratedColumn()
-    idVenta: number
-    @Column()
+    idVenta: number;
+
+    @ManyToOne(() => TipoComprobante,  { eager: true })
+    @JoinColumn({ name: 'idTipoComprobante' }) // Nombre de la columna de la clave foránea
     idTipoComprobante: number;
+
     @Column()
-    noDocumento: string;
-    @Column()
+    nroDocumento: string;
+
+    @Column({ type: "date" })
     fecha: Date;
-    @Column()
+
+    @ManyToOne(() => Cliente,  { eager: true })
+    @JoinColumn({ name: 'idCliente' }) // Nombre de la columna de la clave foránea
     idCliente: number;
-    @Column()
+
+    @ManyToOne(() => Vendedor,  { eager: true })
+    @JoinColumn({ name: 'idVendedor' }) // Nombre de la columna de la clave foránea
     idVendedor: number;
-    @Column()
+
+    @ManyToOne(() => MetodoPago,  { eager: true })
+    @JoinColumn({ name: 'idMetodoPago' }) // Nombre de la columna de la clave foránea
     idMetodoPago: number;
-    @Column()
+
+    @Column({ type: "decimal", precision: 10, scale: 2 })
     subTotal: number;
-    @Column()
+
+    @Column({ type: "decimal", precision: 10, scale: 2 })
     impuestos: number;
-    @Column()
+
+    @Column({ type: "decimal", precision: 10, scale: 2 })
     descuentos: number;
-    @Column()
+
+    @Column({ type: "decimal", precision: 10, scale: 2 })
     total: number;
 }
