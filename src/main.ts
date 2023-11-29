@@ -9,6 +9,9 @@ async function bootstrap() {
   // prefijo para los endpoints
   app.setGlobalPrefix('api/v1');
 
+  // cors
+  app.enableCors()
+
   // Swagger
   const config = new DocumentBuilder()
     .setTitle('PichiAPP')

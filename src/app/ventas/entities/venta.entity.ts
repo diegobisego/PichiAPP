@@ -1,22 +1,22 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from "typeorm";
-import { TipoComprobante } from "../entities/tipoComprobante.entity"; 
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, BeforeInsert } from "typeorm";
+import { TipoComprobanteFiscal } from "../../shared/entities/tipoComprobanteFiscal.entity"; 
 import { Cliente } from "src/app/clientes/entities/cliente.entity"; 
 import { Vendedor } from "../entities/vendedor.entity"; 
-import { MetodoPago } from "../entities/metodoPago.entity"; 
+import { MetodoPago } from "../../shared/entities/metodoPago.entity"; 
 
 @Entity()
 export class Venta {
     @PrimaryGeneratedColumn()
     idVenta: number;
 
-    @ManyToOne(() => TipoComprobante,  { eager: true })
-    @JoinColumn({ name: 'idTipoComprobante' }) // Nombre de la columna de la clave foránea
-    idTipoComprobante: number;
+    @ManyToOne(() => TipoComprobanteFiscal,  { eager: true })
+    @JoinColumn({ name: 'idCodigoComprobante' }) // Nombre de la columna de la clave foránea
+    idCodigoComprobante: number;
 
     @Column()
-    nroDocumento: string;
+    nroComprobante: string; // nro comprobante es el numero de factura
 
-    @Column({ type: "date" })
+    @Column({ type: 'timestamp'})
     fecha: Date;
 
     @ManyToOne(() => Cliente,  { eager: true })
@@ -42,4 +42,10 @@ export class Venta {
 
     @Column({ type: "decimal", precision: 10, scale: 2 })
     total: number;
+
+    @BeforeInsert()
+    setDefaultValues() {
+      // Establecer la fecha y hora actual antes de insertar el registro
+      this.fecha = new Date();
+    }
 }

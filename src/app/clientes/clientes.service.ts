@@ -12,7 +12,7 @@ export class ClientesService {
     private clienteRepository: Repository<Cliente>,
   ) {}
 
-  async create(createClienteDto: CreateClienteDto) {
+  async create(createClienteDto: CreateClienteDto): Promise<Cliente> {
     const nuevoCliente = this.clienteRepository.create(createClienteDto);
     const clienteGuardado = await this.clienteRepository.save(nuevoCliente);
     if (clienteGuardado) {
@@ -22,11 +22,11 @@ export class ClientesService {
     }
   }
 
-  async findAll() {
+  async findAll(): Promise<Cliente[]> {
     return await this.clienteRepository.find();
   }
 
-  async findOne(idCliente: number) {
+  async findOne(idCliente: number): Promise<Cliente> {
     const cliente = await this.clienteRepository.findOne({
       where: { idCliente },
     });
@@ -50,7 +50,7 @@ export class ClientesService {
     return updatedCliente;
   }
 
-  async remove(idCliente: number) {
+  async remove(idCliente: number): Promise<void>  {
     const deleteResult = await this.clienteRepository.delete(idCliente);
     if (deleteResult.affected === 0) {
       throw new NotFoundException(`Cliente con ID ${idCliente} no encontrado.`);

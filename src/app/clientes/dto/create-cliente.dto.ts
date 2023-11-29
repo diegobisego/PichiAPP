@@ -4,11 +4,14 @@ export class CreateClienteDto {
   @ApiProperty({description: 'Nombre y apellido del cliente / Razon Social de la Empresa', example:'Juan Perez'})
   nombreCliente: string;
 
+  @ApiProperty({description: 'Id de la condicion fiscal', example:'1'})
+  idCondicionFiscal: number
+
   @ApiProperty({description: 'Direccion del cliente / Empresa', example:'Las Calles 123'})
   direccion: string
 
   @ApiProperty({description: 'Id ciudad del cliente / Empresa', example:'1'})
-  idCsiudad: number;
+  idCiudad: number;
 
   @ApiProperty({description: 'Id pais del cliente / Empresa', example:'1'})
   idPais: number;

@@ -15,5 +15,12 @@ export class UpdateProductoDto {
 
   @ApiPropertyOptional({example:'100'})
   stockProducto?: number;
+
+  @ApiPropertyOptional()
+  nombreCompleto?: string
+
+  @ApiPropertyOptional()
+  estado?: string
+  
 }
 

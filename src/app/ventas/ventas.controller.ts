@@ -1,11 +1,20 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { VentasService } from './ventas.service';
-import { CreateVentaDto } from './dto/create-venta.dto'; 
+import { CreateVentaDto } from './dto/create-venta.dto';
 import { UpdateVentaDto } from './dto/update-venta.dto';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { Venta } from './entities/venta.entity';
 
 @ApiTags('Ventas')
-@Controller('ventas')
+@Controller('sales')
 export class VentasController {
   constructor(private readonly ventasService: VentasService) {}
 
@@ -17,7 +26,7 @@ export class VentasController {
   @ApiResponse({ status: 201, description: 'Venta creada con éxito' })
   @ApiResponse({ status: 400, description: 'Error al crear la venta' })
   @ApiResponse({ status: 500, description: 'Error interno del servidor' })
-  async create(@Body() createVentaDto: CreateVentaDto) {
+  async create(@Body() createVentaDto: CreateVentaDto): Promise<Venta> {
     try {
       return await this.ventasService.create(createVentaDto);
     } catch (error) {
@@ -33,7 +42,7 @@ export class VentasController {
   })
   @ApiResponse({ status: 200, description: 'Ventas encontradas con éxito' })
   @ApiResponse({ status: 500, description: 'Error interno del servidor' })
-  async findAll() {
+  async findAll(): Promise<Venta[]> {
     try {
       return await this.ventasService.findAll();
     } catch (error) {
@@ -50,7 +59,7 @@ export class VentasController {
   @ApiResponse({ status: 200, description: 'Venta encontrada con éxito' })
   @ApiResponse({ status: 404, description: 'Venta no encontrada' })
   @ApiResponse({ status: 500, description: 'Error interno del servidor' })
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string): Promise<Venta> {
     try {
       return await this.ventasService.findOne(+id);
     } catch (error) {
@@ -67,7 +76,10 @@ export class VentasController {
   @ApiResponse({ status: 200, description: 'Venta actualizada con éxito' })
   @ApiResponse({ status: 404, description: 'Venta no encontrada' })
   @ApiResponse({ status: 500, description: 'Error interno del servidor' })
-  async update(@Param('id') id: string, @Body() updateVentaDto: UpdateVentaDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateVentaDto: UpdateVentaDto,
+  ): Promise<Venta> {
     try {
       return await this.ventasService.update(+id, updateVentaDto);
     } catch (error) {
@@ -84,7 +96,7 @@ export class VentasController {
   @ApiResponse({ status: 200, description: 'Venta eliminada con éxito' })
   @ApiResponse({ status: 404, description: 'Venta no encontrada' })
   @ApiResponse({ status: 500, description: 'Error interno del servidor' })
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string): Promise<void> {
     try {
       return await this.ventasService.remove(+id);
     } catch (error) {

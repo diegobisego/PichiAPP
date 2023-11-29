@@ -3,9 +3,10 @@ import { ClientesService } from './clientes.service';
 import { CreateClienteDto } from './dto/create-cliente.dto';
 import { UpdateClienteDto } from './dto/update-cliente.dto';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { Cliente } from './entities/cliente.entity';
 
 @ApiTags('Clientes')
-@Controller('clientes')
+@Controller('clients')
 export class ClientesController {
   constructor(private readonly clientesService: ClientesService) {}
 
@@ -16,7 +17,7 @@ export class ClientesController {
   })
   @ApiResponse({ status: 201, description: 'Cliente creado con éxito' })
   @ApiResponse({ status: 500, description: 'Error interno del servidor' })
-  async create(@Body() createClienteDto: CreateClienteDto) {
+  async create(@Body() createClienteDto: CreateClienteDto): Promise<Cliente> {
     try {
       return await this.clientesService.create(createClienteDto);
     } catch (error) {
@@ -34,7 +35,7 @@ export class ClientesController {
   })
   @ApiResponse({ status: 200, description: 'Clientes encontrados con éxito' })
   @ApiResponse({ status: 500, description: 'Error interno del servidor' })
-  findAll() {
+  findAll(): Promise<Cliente[]> {
     return this.clientesService.findAll();
   }
 
@@ -46,7 +47,7 @@ export class ClientesController {
   @ApiResponse({ status: 200, description: 'Cliente encontrado con éxito' })
   @ApiResponse({ status: 404, description: 'Cliente no encontrado' })
   @ApiResponse({ status: 500, description: 'Error interno del servidor' })
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string): Promise<Cliente> {
     return this.clientesService.findOne(+id);
   }
 
@@ -58,7 +59,7 @@ export class ClientesController {
   @ApiResponse({ status: 200, description: 'Cliente actualizado con éxito' })
   @ApiResponse({ status: 404, description: 'Cliente no encontrado' })
   @ApiResponse({ status: 500, description: 'Error interno del servidor' })
-  update(@Param('id') id: string, @Body() updateClienteDto: UpdateClienteDto) {
+  update(@Param('id') id: string, @Body() updateClienteDto: UpdateClienteDto): Promise<Cliente> {
     return this.clientesService.update(+id, updateClienteDto);
   }
 
@@ -70,7 +71,7 @@ export class ClientesController {
   @ApiResponse({ status: 200, description: 'Cliente eliminado con éxito' })
   @ApiResponse({ status: 404, description: 'Cliente no encontrado' })
   @ApiResponse({ status: 500, description: 'Error interno del servidor' })
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string): Promise<void> {
     return this.clientesService.remove(+id);
   }
 }

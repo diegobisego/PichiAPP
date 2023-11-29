@@ -12,22 +12,24 @@ export class VentasService {
     private ventaRepository: Repository<Venta>,
   ) {}
 
-  async create(createVentaDto: CreateVentaDto) {
+  async create(createVentaDto: CreateVentaDto): Promise<Venta> {
     try {
       const nuevaVenta = this.ventaRepository.create(createVentaDto);
       const ventaGuardada = await this.ventaRepository.save(nuevaVenta);
       return ventaGuardada;
     } catch (error) {
-      console.error(`Se produjo un error al intentar crear una venta: ${error}`);
+      console.error(
+        `Se produjo un error al intentar crear una venta: ${error}`,
+      );
       throw new Error('Error al crear la venta');
     }
   }
 
-  async findAll() {
+  async findAll(): Promise<Venta[]> {
     return await this.ventaRepository.find();
   }
 
-  async findOne(idVenta: number) {
+  async findOne(idVenta: number): Promise<Venta> {
     const venta = await this.ventaRepository.findOne({
       where: { idVenta },
     });
@@ -37,7 +39,7 @@ export class VentasService {
     return venta;
   }
 
-  async update(id: number, updateVentaDto: UpdateVentaDto) {
+  async update(id: number, updateVentaDto: UpdateVentaDto): Promise<Venta> {
     const venta = await this.findOne(id);
 
     if (!venta) {
@@ -55,11 +57,14 @@ export class VentasService {
     return updatedVenta;
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<void> {
     const deleteResult = await this.ventaRepository.delete(id);
     if (deleteResult.affected === 0) {
       throw new NotFoundException(`Venta con ID ${id} no encontrada.`);
     }
   }
-}
 
+
+
+  
+}

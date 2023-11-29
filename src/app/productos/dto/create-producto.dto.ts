@@ -11,4 +11,8 @@ export class CreateProductoDto {
   idUnidadMedidaProducto: number;
   @ApiPropertyOptional({example:'100'})
   stockProducto: number;
+  @ApiPropertyOptional()
+  nombreCompleto: string
+  @ApiPropertyOptional({example:'Activo'})
+  estado: string
 }

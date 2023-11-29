@@ -3,12 +3,12 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateVentaDto {
   
-  @ApiProperty({ description: 'ID del Tipo de Comprobante', example: 1 })
+  @ApiProperty({ description: 'ID del Tipo de Comprobante segun AFIP', example: 1 })
   idTipoComprobante: number;
 
   
-  @ApiProperty({ description: 'Número de Documento', example: 'INV-123' })
-  nroDocumento: string;
+  @ApiProperty({ description: 'Número de Comprobante de la factura', example: 'INV-123' })
+  nroComprobante: string;
 
   
   @ApiProperty({ description: 'Fecha de la Venta', example: '2023-11-02' })

@@ -5,6 +5,9 @@ export class UpdateClienteDto extends PartialType(CreateClienteDto) {
   @ApiPropertyOptional({example:'Nuevo Nombre'})
   nombreCliente?: string;
 
+  @ApiPropertyOptional({example:'1'})
+  idCondicionFiscal?: number
+
   @ApiPropertyOptional({example:'Nueva Direccion'})
   direccion?: string;
 
