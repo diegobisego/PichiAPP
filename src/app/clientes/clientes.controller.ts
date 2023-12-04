@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus, ParseIntPipe } from '@nestjs/common';
 import { ClientesService } from './clientes.service';
 import { CreateClienteDto } from './dto/create-cliente.dto';
 import { UpdateClienteDto } from './dto/update-cliente.dto';
@@ -47,7 +47,7 @@ export class ClientesController {
   @ApiResponse({ status: 200, description: 'Cliente encontrado con éxito' })
   @ApiResponse({ status: 404, description: 'Cliente no encontrado' })
   @ApiResponse({ status: 500, description: 'Error interno del servidor' })
-  findOne(@Param('id') id: string): Promise<Cliente> {
+  findOne(@Param('id', ParseIntPipe) id: string): Promise<Cliente> {
     return this.clientesService.findOne(+id);
   }
 
@@ -59,7 +59,7 @@ export class ClientesController {
   @ApiResponse({ status: 200, description: 'Cliente actualizado con éxito' })
   @ApiResponse({ status: 404, description: 'Cliente no encontrado' })
   @ApiResponse({ status: 500, description: 'Error interno del servidor' })
-  update(@Param('id') id: string, @Body() updateClienteDto: UpdateClienteDto): Promise<Cliente> {
+  update(@Param('id', ParseIntPipe) id: string, @Body() updateClienteDto: UpdateClienteDto): Promise<Cliente> {
     return this.clientesService.update(+id, updateClienteDto);
   }
 
@@ -71,7 +71,7 @@ export class ClientesController {
   @ApiResponse({ status: 200, description: 'Cliente eliminado con éxito' })
   @ApiResponse({ status: 404, description: 'Cliente no encontrado' })
   @ApiResponse({ status: 500, description: 'Error interno del servidor' })
-  remove(@Param('id') id: string): Promise<void> {
+  remove(@Param('id', ParseIntPipe) id: string): Promise<void> {
     return this.clientesService.remove(+id);
   }
 }

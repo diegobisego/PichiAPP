@@ -170,7 +170,7 @@ export class ProductosController {
   @ApiResponse({ status: 200, description: 'Producto eliminado con éxito' })
   @ApiResponse({ status: 404, description: 'Producto no encontrado' })
   @ApiResponse({ status: 500, description: 'Error interno del servidor' })
-  async remove(@Param('id') id: string): Promise<void> {
+  async remove(@Param('id', ParseIntPipe) id: string): Promise<void> {
     try {
       await this.productosService.remove(+id);
     } catch (error) {

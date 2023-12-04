@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  ParseIntPipe
 } from '@nestjs/common';
 import { VentasService } from './ventas.service';
 import { CreateVentaDto } from './dto/create-venta.dto';
@@ -59,7 +60,7 @@ export class VentasController {
   @ApiResponse({ status: 200, description: 'Venta encontrada con éxito' })
   @ApiResponse({ status: 404, description: 'Venta no encontrada' })
   @ApiResponse({ status: 500, description: 'Error interno del servidor' })
-  async findOne(@Param('id') id: string): Promise<Venta> {
+  async findOne(@Param('id', ParseIntPipe) id: string): Promise<Venta> {
     try {
       return await this.ventasService.findOne(+id);
     } catch (error) {
@@ -77,7 +78,7 @@ export class VentasController {
   @ApiResponse({ status: 404, description: 'Venta no encontrada' })
   @ApiResponse({ status: 500, description: 'Error interno del servidor' })
   async update(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: string,
     @Body() updateVentaDto: UpdateVentaDto,
   ): Promise<Venta> {
     try {
@@ -96,7 +97,7 @@ export class VentasController {
   @ApiResponse({ status: 200, description: 'Venta eliminada con éxito' })
   @ApiResponse({ status: 404, description: 'Venta no encontrada' })
   @ApiResponse({ status: 500, description: 'Error interno del servidor' })
-  async remove(@Param('id') id: string): Promise<void> {
+  async remove(@Param('id', ParseIntPipe) id: string): Promise<void> {
     try {
       return await this.ventasService.remove(+id);
     } catch (error) {

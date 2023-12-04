@@ -1,33 +1,48 @@
+import { IsString, IsInt, Min } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateClienteDto {
-  @ApiProperty({description: 'Nombre y apellido del cliente / Razon Social de la Empresa', example:'Juan Perez'})
+
+  @IsString({ message: 'El campo nombreCliente debe ser un String' })
+  @ApiProperty({ description: 'Nombre y apellido del cliente / Razon Social de la Empresa', example:'Juan Perez' })
   nombreCliente: string;
 
-  @ApiProperty({description: 'Id de la condicion fiscal', example:'1'})
-  idCondicionFiscal: number
+  @IsInt({ message: 'El campo idCondicionFiscal debe ser un número entero' })
+  @Min(1, { message: 'El valor no puede ser menor a 1'})
+  @ApiProperty({ description: 'Id de la condicion fiscal', example:'1' })
+  idCondicionFiscal: number;
 
-  @ApiProperty({description: 'Direccion del cliente / Empresa', example:'Las Calles 123'})
-  direccion: string
+  @IsString({ message: 'El campo direccion debe ser un String' })
+  @ApiProperty({ description: 'Direccion del cliente / Empresa', example:'Las Calles 123' })
+  direccion: string;
 
-  @ApiProperty({description: 'Id ciudad del cliente / Empresa', example:'1'})
+  @IsInt({ message: 'El campo idCiudad debe ser un número entero' })
+  @Min(1, { message: 'El valor no puede ser menor a 1'})
+  @ApiProperty({ description: 'Id ciudad del cliente / Empresa', example:'1' })
   idCiudad: number;
 
-  @ApiProperty({description: 'Id pais del cliente / Empresa', example:'1'})
+  @IsInt({ message: 'El campo idPais debe ser un número entero' })
+  @Min(1, { message: 'El valor no puede ser menor a 1'})
+  @ApiProperty({ description: 'Id pais del cliente / Empresa', example:'1' })
   idPais: number;
 
-  @ApiPropertyOptional({example:'0123-456789'})
+  @IsString({ message: 'El campo telefono debe ser un String' })
+  @ApiPropertyOptional({ example:'0123-456789' })
   telefono: string;
 
-  @ApiProperty({example:'12458745 / 20123456788'})
+  @IsString({ message: 'El campo dniCuit debe ser un String' })
+  @ApiProperty({ example:'12458745 / 20123456788' })
   dniCuit: string;
 
-  @ApiProperty({example:'0123-456789'})
+  @IsString({ message: 'El campo email debe ser un String' })
+  @ApiProperty({ example:'0123-456789' })
   email: string;
 
-  @ApiPropertyOptional({example:'La Empresa SRL'})
+  @IsString({ message: 'El campo razonSocial debe ser un String' })
+  @ApiPropertyOptional({ example:'La Empresa SRL' })
   razonSocial: string;
 
-  @ApiPropertyOptional({example:'Info adicional a agregar'})
+  @IsString({ message: 'El campo infoAdicional debe ser un String' })
+  @ApiPropertyOptional({ example:'Info adicional a agregar' })
   infoAdicional: string;
 }

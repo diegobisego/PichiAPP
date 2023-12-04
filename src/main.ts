@@ -25,6 +25,8 @@ async function bootstrap() {
   // manejador de errores
   app.useGlobalPipes(
     new ValidationPipe({
+      stopAtFirstError: true,
+      whitelist: true,
       exceptionFactory: (errors: ValidationError[]) => {
         throw new HttpException({ message: 'Validation failed', errors }, HttpStatus.BAD_REQUEST);
       },
