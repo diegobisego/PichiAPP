@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsString, IsInt, IsNumber, IsDate, Min } from 'class-validator';
 
 export class CreateVentaDto {
@@ -6,20 +6,22 @@ export class CreateVentaDto {
   @ApiProperty({ description: 'ID del Tipo de Comprobante segun AFIP', example: 1 })
   @IsInt({ message: 'El campo idTipoComprobante debe ser un entero' })
   @Min(1, { message: 'El valor no puede ser menor a 1'})
-  idTipoComprobante: number;
+  idCodigoComprobante: number;
 
-  @ApiProperty({ description: 'Número de Comprobante de la factura', example: 'INV-123' })
-  @IsString({ message: 'El campo nroComprobante debe ser una cadena de texto' })
-  @Min(1, { message: 'El valor no puede ser menor a 1'})
+  @ApiProperty({ description: 'ID de la sucursal', example: 1 })
+  @IsInt({ message: 'El campo sucursal debe ser un entero' })
+  sucursal: number;
+
+  @ApiPropertyOptional({ description: 'Número de Comprobante de la factura', example: 'INV-123' })
+  @IsString()
   nroComprobante: string;
 
-  @IsDate({ message: 'El campo fecha debe ser una fecha válida' })
   @ApiProperty({ description: 'Fecha de la Venta', example: '2023-11-02' })
   fecha: Date;
 
   @ApiProperty({ description: 'ID del Cliente', example: 2 })
   @IsInt({ message: 'El campo idCliente debe ser un número entero' })
-  @Min(1, { message: 'El valor no puede ser menor a 1'})
+  @Min(1, { message: 'Debe seleccionar un Cliente'})
   idCliente: number;
 
   @ApiProperty({ description: 'ID del Vendedor', example: 3 })
@@ -41,7 +43,7 @@ export class CreateVentaDto {
   @Min(0, { message: 'El valor no puede ser menor a 0'})
   impuestos: number;
 
-  @ApiProperty({ description: 'Descuentos de la Venta', example: 5.0 })
+  @ApiPropertyOptional({ description: 'Descuentos de la Venta', example: 5.0 })
   @IsNumber({}, { message: 'El campo descuentos debe ser un número' })
   @Min(0, { message: 'El valor no puede ser menor a 0'})
   descuentos: number;

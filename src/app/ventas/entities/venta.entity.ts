@@ -16,12 +16,15 @@ export class Venta {
     @Column()
     nroComprobante: string; // nro comprobante es el numero de factura
 
+    @Column()
+    sucursal: number; 
+
     @Column({ type: 'timestamp'})
     fecha: Date;
 
-    @ManyToOne(() => Cliente,  { eager: true })
-    @JoinColumn({ name: 'idCliente' }) // Nombre de la columna de la clave foránea
-    idCliente: number;
+    @ManyToOne(() => Cliente, { eager: true })
+    @JoinColumn({ name: 'idCliente' })
+    idCliente: number; 
 
     @ManyToOne(() => Vendedor,  { eager: true })
     @JoinColumn({ name: 'idVendedor' }) // Nombre de la columna de la clave foránea

@@ -10,9 +10,9 @@ import {
 } from '@nestjs/common';
 import { VentasService } from './ventas.service';
 import { CreateVentaDto } from './dto/create-venta.dto';
-import { UpdateVentaDto } from './dto/update-venta.dto';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Venta } from './entities/venta.entity';
+import { UpdateVentaDto } from './dto/update-venta.dto';
 
 @ApiTags('Ventas')
 @Controller('sales')
@@ -22,14 +22,20 @@ export class VentasController {
   @Post()
   @ApiOperation({
     summary: 'Crear una Venta',
-    description: 'Crea una nueva venta en la base de datos',
+    description: 'Crea una nueva venta en la base de datos junto con su detalle',
   })
   @ApiResponse({ status: 201, description: 'Venta creada con éxito' })
   @ApiResponse({ status: 400, description: 'Error al crear la venta' })
   @ApiResponse({ status: 500, description: 'Error interno del servidor' })
   async create(@Body() createVentaDto: CreateVentaDto): Promise<Venta> {
     try {
-      return await this.ventasService.create(createVentaDto);
+      // Llama al método create de VentasService con los datos de la venta y su detalle
+      const resultado = await this.ventasService.create(createVentaDto);
+
+      // Puedes devolver el resultado como necesites
+      return resultado
+
+  
     } catch (error) {
       console.error(`Error al crear una venta: ${error}`);
       throw new Error('Error al crear la venta');
@@ -52,6 +58,8 @@ export class VentasController {
     }
   }
 
+
+
   @Get(':id')
   @ApiOperation({
     summary: 'Obtener una Venta',
@@ -63,6 +71,23 @@ export class VentasController {
   async findOne(@Param('id', ParseIntPipe) id: string): Promise<Venta> {
     try {
       return await this.ventasService.findOne(+id);
+    } catch (error) {
+      console.error(`Error al obtener la venta: ${error}`);
+      throw new Error('Error al obtener la venta');
+    }
+  }
+
+  @Get('bills/:id')
+  @ApiOperation({
+    summary: 'Obtener Facuturas de venta por ID de cliente',
+    description: 'Obtener Facuturas de venta por cliente',
+  })
+  @ApiResponse({ status: 200, description: 'Facuturas encontradas con éxito' })
+  @ApiResponse({ status: 404, description: 'Facuturas no encontradas' })
+  @ApiResponse({ status: 500, description: 'Error interno del servidor' })
+  async findAllBills(@Param('id', ParseIntPipe) id: number): Promise<Venta> {
+    try {
+      return await this.ventasService.findAllBills(+id);
     } catch (error) {
       console.error(`Error al obtener la venta: ${error}`);
       throw new Error('Error al obtener la venta');

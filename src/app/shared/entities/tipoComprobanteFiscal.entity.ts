@@ -10,4 +10,7 @@ export class TipoComprobanteFiscal {
     @Column()
     descripcion: string
 
+    @Column()
+    nombreCorto: string
+
 }

@@ -5,8 +5,7 @@ import {
   JoinColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Pais } from 'src/app/shared/entities/pais.entity';
-import { Ciudad } from 'src/app/shared/entities/ciudad.entity';
+
 import { CondicionFiscal } from './condicionFiscal.entity';
 
 @Entity()
@@ -24,13 +23,15 @@ export class Cliente {
   @Column()
   direccion: string;
 
-  @ManyToOne(() => Ciudad, { eager: true })
-  @JoinColumn({ name: 'idCiudad' })
-  idCiudad: number;
+  @Column()
+  ciudad: string;
+  
 
-  @ManyToOne(() => Pais, { eager: true })
-  @JoinColumn({ name: 'idPais' })
-  idPais: number;
+  @Column()
+  provincia: string;
+
+  @Column()
+  pais: string;
 
   @Column()
   telefono: string;

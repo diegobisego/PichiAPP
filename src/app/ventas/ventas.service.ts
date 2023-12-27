@@ -5,6 +5,8 @@ import { UpdateVentaDto } from './dto/update-venta.dto';
 import { Repository } from 'typeorm';
 import { Venta } from './entities/venta.entity';
 
+
+
 @Injectable()
 export class VentasService {
   constructor(
@@ -14,19 +16,33 @@ export class VentasService {
 
   async create(createVentaDto: CreateVentaDto): Promise<Venta> {
     try {
+      // Crear instancias de las entidades
       const nuevaVenta = this.ventaRepository.create(createVentaDto);
+
+      // Guardar la venta principal
       const ventaGuardada = await this.ventaRepository.save(nuevaVenta);
-      return ventaGuardada;
+
+      // Devolver un objeto con las instancias guardadas
+      return ventaGuardada
+
     } catch (error) {
-      console.error(
-        `Se produjo un error al intentar crear una venta: ${error}`,
-      );
+      console.error(`Se produjo un error al intentar crear una venta: ${error}`);
       throw new Error('Error al crear la venta');
     }
   }
 
   async findAll(): Promise<Venta[]> {
     return await this.ventaRepository.find();
+  }
+
+  async findAllBills(idCliente: number): Promise<any> {
+    const result = await this.ventaRepository
+      .createQueryBuilder('venta')
+      .select(['venta.nroComprobante','venta.total'])
+      .where('venta.idCliente = :idCliente', { idCliente })
+      .getMany();
+
+    return result;
   }
 
   async findOne(idVenta: number): Promise<Venta> {
@@ -63,8 +79,4 @@ export class VentasService {
       throw new NotFoundException(`Venta con ID ${id} no encontrada.`);
     }
   }
-
-
-
-  
 }

@@ -8,8 +8,7 @@ import { getDatabaseConfig } from '../config/dbConfig';
 import { ClientesModule } from './clientes/clientes.module';
 import { VentasModule } from './ventas/ventas.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { DetalleVentaController } from './detalle-venta/detalle-venta.controller';
-import { DetalleVentaModule } from './detalle-venta/detalle-venta.module';
+import { VentaDetalleModule } from './venta-detalle/venta-detalle.module';
 import appConfig from 'src/config/app.config';
 
 @Module({
@@ -27,9 +26,9 @@ import appConfig from 'src/config/app.config';
     ProductosModule,
     ClientesModule,
     VentasModule,
-    DetalleVentaModule
+    VentaDetalleModule
   ],
-  controllers: [AppController, DetalleVentaController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}

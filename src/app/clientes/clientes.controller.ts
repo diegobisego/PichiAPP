@@ -4,11 +4,17 @@ import { CreateClienteDto } from './dto/create-cliente.dto';
 import { UpdateClienteDto } from './dto/update-cliente.dto';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Cliente } from './entities/cliente.entity';
+import { CondicionFiscal } from './entities/condicionFiscal.entity';
 
 @ApiTags('Clientes')
 @Controller('clients')
 export class ClientesController {
-  constructor(private readonly clientesService: ClientesService) {}
+  constructor(
+      private readonly clientesService: ClientesService,
+      private readonly condicionFiscalService: ClientesService
+
+      
+      ) {}
 
   @Post()
   @ApiOperation({
@@ -37,6 +43,17 @@ export class ClientesController {
   @ApiResponse({ status: 500, description: 'Error interno del servidor' })
   findAll(): Promise<Cliente[]> {
     return this.clientesService.findAll();
+  }
+
+  @Get('/tax-Status')
+  @ApiOperation({
+    summary: 'Obtener Condicion Fiscal',
+    description: 'Obtener la lista de clientes',
+  })
+  @ApiResponse({ status: 200, description: 'Clientes encontrados con éxito' })
+  @ApiResponse({ status: 500, description: 'Error interno del servidor' })
+  findAllCondicionFiscal(): Promise<CondicionFiscal[]> {
+    return this.condicionFiscalService.findAllCondicionFiscal();
   }
 
   @Get(':id')

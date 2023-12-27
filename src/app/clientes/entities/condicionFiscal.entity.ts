@@ -1,10 +1,13 @@
-import { Entity, Column, PrimaryColumn } from "typeorm";
+import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class CondicionFiscal {
-    @PrimaryColumn()
-    idCondicionFiscal: number;
+  @PrimaryColumn()
+  idCondicionFiscal: number;
 
-    @Column()
-    descripcion: string;
+  @Column()
+  nombreCorto: string;
+
+  @Column()
+  descripcion: string;
 }

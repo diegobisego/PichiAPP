@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateClienteDto } from './dto/create-cliente.dto';
 import { Cliente } from './entities/cliente.entity';
+import { CondicionFiscal } from './entities/condicionFiscal.entity';
 import { Repository } from 'typeorm';
 import { UpdateClienteDto } from './dto/update-cliente.dto';
 
@@ -10,6 +11,8 @@ export class ClientesService {
   constructor(
     @InjectRepository(Cliente)
     private clienteRepository: Repository<Cliente>,
+    @InjectRepository(CondicionFiscal)
+    private condicionFiscalRepository: Repository<CondicionFiscal>,
   ) {}
 
   async create(createClienteDto: CreateClienteDto): Promise<Cliente> {
@@ -24,6 +27,10 @@ export class ClientesService {
 
   async findAll(): Promise<Cliente[]> {
     return await this.clienteRepository.find();
+  }
+
+  async findAllCondicionFiscal(): Promise<CondicionFiscal[]> {
+    return await this.condicionFiscalRepository.find();
   }
 
   async findOne(idCliente: number): Promise<Cliente> {
@@ -56,4 +63,7 @@ export class ClientesService {
       throw new NotFoundException(`Cliente con ID ${idCliente} no encontrado.`);
     }
   }
+
+
+  
 }
